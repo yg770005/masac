@@ -125,47 +125,47 @@ export default function Home() {
         <HeroSection />
       </section>
 
-      {/* Section 2: Problem Statement —— 问题定义 */}
+      {/* Section 2: Problem Statement */}
       <section id="problem">
         <ProblemStatement />
       </section>
 
-      {/* Section 3: System Overview —— 系统概览 */}
+      {/* Section 3: System Overview */}
       <section id="overview">
         <SystemOverview />
       </section>
 
-      {/* Section 4: How MASAC Works —— MASAC如何解决问题 */}
+      {/* Section 4: How MASAC Works */}
       <section id="how">
         <HowMASACWorks />
       </section>
 
-      {/* Section 5: Algorithm Architecture —— 算法架构 */}
+      {/* Section 5: Algorithm Architecture */}
       <section id="algorithm">
         <AlgorithmFlow />
       </section>
 
-      {/* Section 6: Training Dashboard —— 训练驾驶舱 */}
+      {/* Section 6: Training Dashboard */}
       <section id="dashboard">
         <TrainingDashboard />
       </section>
 
-      {/* Section 7: Multi-UAV Cooperation —— 协同展示 */}
+      {/* Section 7: Multi-UAV Cooperation */}
       <section id="cooperation">
         <CooperationScene />
       </section>
 
-      {/* Section 8: Demo Center —— 演示中心 */}
+      {/* Section 8: Demo Center */}
       <section id="demo">
         <VideoCenter />
       </section>
 
-      {/* Section 9: Project Results —— 项目成果 */}
+      {/* Section 9: Project Results */}
       <section id="results">
         <ResultsPanel />
       </section>
 
-      {/* Section 10: Future Vision —— 未来展望与个人思考 */}
+      {/* Section 10: Future Vision */}
       <section id="vision">
         <FutureVision />
       </section>
