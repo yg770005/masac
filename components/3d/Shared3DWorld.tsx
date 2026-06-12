@@ -5,6 +5,7 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import DeepParticleUniverse from "./DeepParticleUniverse";
 import DroneTrailSystem from "./DroneTrailSystem";
+import CelestialBodies from "./CelestialBodies";
 
 // 摄像机系统
 function VirtualCamera({ scrollRef }: { scrollRef: RefObject<number> }) {
@@ -168,6 +169,7 @@ export default function Shared3DWorld({
           <DeepParticleUniverse mouseRef={mouseRef} />
           <LightTunnel />
           <GroundGrid />
+          <CelestialBodies />
           <DroneTrailSystem cameraZ={scrollRef as any} />
           <TransitionBurst trigger={transitionTrigger} />
           <VirtualCamera scrollRef={scrollRef} />

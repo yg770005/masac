@@ -10,10 +10,10 @@ export default function AmbientOverlay({ transitionTrigger }: { transitionTrigge
       {/* 全屏背景网格 */}
       {/* ================================================ */}
       <div
-        className="absolute inset-0 opacity-[0.02]"
+        className="absolute inset-0 opacity-[0.06]"
         style={{
           backgroundImage:
-            "linear-gradient(rgba(34,211,238,0.4) 1px, transparent 1px), linear-gradient(90deg, rgba(34,211,238,0.4) 1px, transparent 1px)",
+            "linear-gradient(rgba(34,211,238,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(34,211,238,0.5) 1px, transparent 1px)",
           backgroundSize: "60px 60px",
         }}
       />
@@ -21,10 +21,10 @@ export default function AmbientOverlay({ transitionTrigger }: { transitionTrigge
       {/* ================================================ */}
       {/* 四角色光 */}
       {/* ================================================ */}
-      <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-purple-500/5 rounded-full blur-[120px]" />
-      <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-pink-500/5 rounded-full blur-[100px]" />
-      <div className="absolute bottom-0 left-0 w-[350px] h-[350px] bg-cyan-500/4 rounded-full blur-[100px]" />
-      <div className="absolute bottom-0 right-0 w-[450px] h-[450px] bg-blue-500/5 rounded-full blur-[120px]" />
+      <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-purple-500/15 rounded-full blur-[120px]" />
+      <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-pink-500/12 rounded-full blur-[100px]" />
+      <div className="absolute bottom-0 left-0 w-[350px] h-[350px] bg-cyan-500/12 rounded-full blur-[100px]" />
+      <div className="absolute bottom-0 right-0 w-[450px] h-[450px] bg-blue-500/15 rounded-full blur-[120px]" />
 
       {/* ================================================ */}
       {/* 左侧轨道环组 — 青色系 */}
@@ -38,8 +38,8 @@ export default function AmbientOverlay({ transitionTrigger }: { transitionTrigge
         <div
           className="w-full h-full rounded-full"
           style={{
-            border: "1px solid rgba(34,211,238,0.07)",
-            boxShadow: "inset 0 0 100px rgba(34,211,238,0.03)",
+            border: "2px solid rgba(34,211,238,0.2)",
+            boxShadow: "inset 0 0 100px rgba(34,211,238,0.08), 0 0 60px rgba(34,211,238,0.06)",
           }}
         />
       </motion.div>
@@ -53,7 +53,7 @@ export default function AmbientOverlay({ transitionTrigger }: { transitionTrigge
         <div
           className="w-full h-full rounded-full"
           style={{
-            border: "1px solid rgba(6,182,212,0.04)",
+            border: "1px solid rgba(6,182,212,0.15)",
             borderStyle: "dashed",
           }}
         />
@@ -71,8 +71,8 @@ export default function AmbientOverlay({ transitionTrigger }: { transitionTrigge
         <div
           className="w-full h-full rounded-full"
           style={{
-            border: "1px solid rgba(139,92,246,0.06)",
-            boxShadow: "inset 0 0 100px rgba(139,92,246,0.02)",
+            border: "2px solid rgba(139,92,246,0.18)",
+            boxShadow: "inset 0 0 100px rgba(139,92,246,0.06), 0 0 60px rgba(139,92,246,0.05)",
           }}
         />
       </motion.div>
@@ -86,7 +86,7 @@ export default function AmbientOverlay({ transitionTrigger }: { transitionTrigge
         <div
           className="w-full h-full rounded-full"
           style={{
-            border: "1px solid rgba(236,72,153,0.04)",
+            border: "1px solid rgba(236,72,153,0.14)",
             borderStyle: "dotted",
           }}
         />
@@ -101,7 +101,7 @@ export default function AmbientOverlay({ transitionTrigger }: { transitionTrigge
         <div
           className="w-full h-full rounded-full"
           style={{
-            border: "1px solid rgba(245,158,11,0.04)",
+            border: "1px solid rgba(245,158,11,0.15)",
           }}
         />
       </motion.div>
@@ -172,12 +172,12 @@ export default function AmbientOverlay({ transitionTrigger }: { transitionTrigge
       {/* 左侧散落光点 */}
       {/* ================================================ */}
       {[
-        { x: "3%", y: "20%", c: "rgba(34,211,238,0.5)", s: 3, d: 2, dl: 0 },
-        { x: "6%", y: "65%", c: "rgba(59,130,246,0.4)", s: 2, d: 3, dl: 0.8 },
-        { x: "2%", y: "40%", c: "rgba(139,92,246,0.5)", s: 2.5, d: 2.5, dl: 1.5 },
-        { x: "7%", y: "85%", c: "rgba(34,211,238,0.35)", s: 1.5, d: 4, dl: 0.3 },
-        { x: "4%", y: "10%", c: "rgba(245,158,11,0.4)", s: 2, d: 3.5, dl: 2 },
-        { x: "8%", y: "50%", c: "rgba(236,72,153,0.4)", s: 2.5, d: 3, dl: 1 },
+        { x: "3%", y: "20%", c: "rgba(34,211,238,0.9)", s: 5, d: 2, dl: 0 },
+        { x: "6%", y: "65%", c: "rgba(59,130,246,0.8)", s: 4, d: 3, dl: 0.8 },
+        { x: "2%", y: "40%", c: "rgba(139,92,246,0.85)", s: 5, d: 2.5, dl: 1.5 },
+        { x: "7%", y: "85%", c: "rgba(34,211,238,0.7)", s: 3, d: 4, dl: 0.3 },
+        { x: "4%", y: "10%", c: "rgba(245,158,11,0.8)", s: 4, d: 3.5, dl: 2 },
+        { x: "8%", y: "50%", c: "rgba(236,72,153,0.8)", s: 4, d: 3, dl: 1 },
       ].map((dot, i) => (
         <motion.div
           key={`left-${i}`}
@@ -188,9 +188,9 @@ export default function AmbientOverlay({ transitionTrigger }: { transitionTrigge
             width: `${dot.s}px`,
             height: `${dot.s}px`,
             backgroundColor: dot.c,
-            boxShadow: `0 0 ${dot.s * 4}px ${dot.c}`,
+            boxShadow: `0 0 ${dot.s * 6}px ${dot.c}`,
           }}
-          animate={{ opacity: [0.2, 0.7, 0.2] }}
+          animate={{ opacity: [0.3, 1, 0.3] }}
           transition={{ duration: dot.d, delay: dot.dl, repeat: Infinity, ease: "easeInOut" }}
         />
       ))}
@@ -199,12 +199,12 @@ export default function AmbientOverlay({ transitionTrigger }: { transitionTrigge
       {/* 右侧散落光点 */}
       {/* ================================================ */}
       {[
-        { x: "93%", y: "15%", c: "rgba(139,92,246,0.5)", s: 2.5, d: 2.5, dl: 0 },
-        { x: "96%", y: "55%", c: "rgba(236,72,153,0.45)", s: 3, d: 3, dl: 1 },
-        { x: "91%", y: "75%", c: "rgba(34,211,238,0.4)", s: 2, d: 3.5, dl: 0.5 },
-        { x: "97%", y: "35%", c: "rgba(245,158,11,0.5)", s: 2.5, d: 2, dl: 2 },
-        { x: "94%", y: "5%", c: "rgba(59,130,246,0.45)", s: 2, d: 4, dl: 1.2 },
-        { x: "89%", y: "90%", c: "rgba(236,72,153,0.35)", s: 1.5, d: 3, dl: 0.7 },
+        { x: "93%", y: "15%", c: "rgba(139,92,246,0.9)", s: 5, d: 2.5, dl: 0 },
+        { x: "96%", y: "55%", c: "rgba(236,72,153,0.85)", s: 5, d: 3, dl: 1 },
+        { x: "91%", y: "75%", c: "rgba(34,211,238,0.8)", s: 4, d: 3.5, dl: 0.5 },
+        { x: "97%", y: "35%", c: "rgba(245,158,11,0.85)", s: 5, d: 2, dl: 2 },
+        { x: "94%", y: "5%", c: "rgba(59,130,246,0.85)", s: 4, d: 4, dl: 1.2 },
+        { x: "89%", y: "90%", c: "rgba(236,72,153,0.7)", s: 3, d: 3, dl: 0.7 },
       ].map((dot, i) => (
         <motion.div
           key={`right-${i}`}
@@ -215,9 +215,9 @@ export default function AmbientOverlay({ transitionTrigger }: { transitionTrigge
             width: `${dot.s}px`,
             height: `${dot.s}px`,
             backgroundColor: dot.c,
-            boxShadow: `0 0 ${dot.s * 4}px ${dot.c}`,
+            boxShadow: `0 0 ${dot.s * 6}px ${dot.c}`,
           }}
-          animate={{ opacity: [0.2, 0.7, 0.2] }}
+          animate={{ opacity: [0.3, 1, 0.3] }}
           transition={{ duration: dot.d, delay: dot.dl, repeat: Infinity, ease: "easeInOut" }}
         />
       ))}
