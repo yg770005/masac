@@ -1,174 +1,159 @@
 "use client";
 
+import { useState, useEffect, useRef } from "react";
+import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
-import { useEffect, useState, useRef } from "react";
 
-// 动态导入所有section
-const HeroSection = dynamic(() => import("../components/HeroSection"), { ssr: false });
-const ProblemStatement = dynamic(() => import("../components/ProblemStatement"), { ssr: false });
-const SystemOverview = dynamic(() => import("../components/SystemOverview"), { ssr: false });
-const HowMASACWorks = dynamic(() => import("../components/HowMASACWorks"), { ssr: false });
-const AlgorithmFlow = dynamic(() => import("../components/AlgorithmFlow"), { ssr: false });
-const TrainingDashboard = dynamic(() => import("../components/TrainingDashboard"), { ssr: false });
-const CooperationScene = dynamic(() => import("../components/CooperationScene"), { ssr: false });
-const VideoCenter = dynamic(() => import("../components/VideoCenter"), { ssr: false });
-const ResultsPanel = dynamic(() => import("../components/ResultsPanel"), { ssr: false });
-const FutureVision = dynamic(() => import("../components/FutureVision"), { ssr: false });
+const Scene01Challenge = dynamic(() => import("../components/scene/Scene01Challenge"), { ssr: false });
+const Scene02Conflict = dynamic(() => import("../components/scene/Scene02Conflict"), { ssr: false });
+const SceneInsideMASAC = dynamic(() => import("../components/scene/SceneInsideMASAC"), { ssr: false });
+const Scene04Learning = dynamic(() => import("../components/scene/Scene04Learning"), { ssr: false });
+const Scene05Validation = dynamic(() => import("../components/scene/Scene05Validation"), { ssr: false });
+const VideoScene = dynamic(() => import("../components/video/VideoScene"), { ssr: false });
+const Scene06Future = dynamic(() => import("../components/scene/Scene06Future"), { ssr: false });
+const Shared3DWorld = dynamic(() => import("../components/3d/Shared3DWorld"), { ssr: false });
+const AmbientOverlay = dynamic(() => import("../components/ui/AmbientOverlay"), { ssr: false });
 
-function Navbar() {
-  const [active, setActive] = useState("home");
-  const [scrolled, setScrolled] = useState(false);
+const SCENE_HEIGHTS = [100, 300, 800, 100, 400, 100, 200];
+const TOTAL_VH = SCENE_HEIGHTS.reduce((a, b) => a + b, 0);
+const SCENE_LABELS = ["挑战", "冲突", "深入", "学习", "验证", "演示", "未来"];
 
-  useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 50);
-      const sections = document.querySelectorAll("section[id]");
-      sections.forEach((s) => {
-        const el = s as HTMLElement;
-        const top = el.offsetTop - 100;
-        if (window.scrollY >= top && window.scrollY < top + el.offsetHeight) {
-          setActive(el.id);
-        }
-      });
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  const navItems = [
-    { id: "home", label: "首页" },
-    { id: "problem", label: "问题定义" },
-    { id: "overview", label: "系统概览" },
-    { id: "how", label: "MASAC原理" },
-    { id: "algorithm", label: "算法架构" },
-    { id: "dashboard", label: "训练驾驶舱" },
-    { id: "cooperation", label: "协同展示" },
-    { id: "demo", label: "演示中心" },
-    { id: "results", label: "项目成果" },
-    { id: "vision", label: "未来展望" },
-  ];
-
-  const scrollTo = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-  };
-
+function NarrativeNav({ active }: { active: number }) {
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? "bg-black/60 backdrop-blur-xl border-b border-cyan-500/20"
-          : "bg-transparent"
-      }`}
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: 1.5, duration: 0.8 }}
+      className="fixed right-5 top-1/2 -translate-y-1/2 z-50 flex flex-col items-center gap-4"
     >
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-8 py-4">
+      {SCENE_LABELS.map((label, i) => (
         <button
-          onClick={() => scrollTo("home")}
-          className="text-lg font-black tracking-[0.2em] neon-text"
+          key={label}
+          onClick={() => {
+            let offset = 0;
+            for (let j = 0; j < i; j++) offset += SCENE_HEIGHTS[j];
+            const targetY = (offset / TOTAL_VH) * (document.body.scrollHeight - window.innerHeight);
+            window.scrollTo({ top: targetY, behavior: "smooth" });
+          }}
+          className="group relative flex items-center"
         >
-          MASAC
+          <span
+            className={`absolute right-7 text-[10px] font-mono whitespace-nowrap transition-all duration-300 ${
+              active === i ? "text-cyan-400 opacity-100" : "text-slate-700 opacity-0 group-hover:opacity-100 group-hover:text-slate-500"
+            }`}
+          >
+            {label}
+          </span>
+          <span
+            className={`block w-2 h-2 rounded-full transition-all duration-500 ${
+              active === i
+                ? "bg-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.7)] scale-150"
+                : active > i ? "bg-cyan-500/40" : "bg-slate-700 hover:bg-slate-500"
+            }`}
+          />
         </button>
-        <div className="hidden lg:flex items-center gap-1">
-          {navItems.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => scrollTo(item.id)}
-              className={`relative px-3 py-2 text-xs uppercase tracking-[0.15em] transition-colors ${
-                active === item.id
-                  ? "text-cyan-400 neon-text"
-                  : "text-slate-500 hover:text-slate-300"
-              }`}
-            >
-              {item.label}
-              {active === item.id && (
-                <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-px bg-cyan-400" />
-              )}
-            </button>
-          ))}
-        </div>
-      </div>
-    </nav>
+      ))}
+      <div className="absolute top-2 bottom-2 w-px bg-gradient-to-b from-cyan-500/20 via-slate-700/50 to-slate-700/50 -z-10" />
+    </motion.div>
   );
 }
 
-export default function Home() {
-  const starRef = useRef<HTMLDivElement>(null);
+// 电影感场景过渡 — 无blur，纯zoom + opacity + glow
+function SceneWrapper({ children, isActive }: { children: React.ReactNode; isActive: boolean }) {
+  return (
+    <motion.div
+      initial={false}
+      animate={{
+        opacity: isActive ? 1 : 0,
+        scale: isActive ? 1 : 0.88,
+        pointerEvents: isActive ? "auto" : "none",
+      }}
+      transition={{ duration: 0.45, ease: [0.33, 1, 0.68, 1] }}
+      className="sticky top-0 h-screen w-full"
+      style={{
+        textShadow: isActive
+          ? "0 0 40px rgba(34,211,238,0.15)"
+          : "0 0 0px rgba(34,211,238,0)",
+        transition: "text-shadow 0.5s ease",
+      }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+export default function Page() {
+  const [activeScene, setActiveScene] = useState(0);
+  const [transitionTrigger, setTransitionTrigger] = useState(0);
+  const scrollRef = useRef(0);
+  const mouseRef = useRef({ x: 0, y: 0 });
+  const prevActiveRef = useRef(0);
 
   useEffect(() => {
-    if (!starRef.current) return;
-    const container = starRef.current;
-    const stars: HTMLDivElement[] = [];
-    for (let i = 0; i < 200; i++) {
-      const star = document.createElement("div");
-      star.className = "star";
-      star.style.left = `${Math.random() * 100}%`;
-      star.style.top = `${Math.random() * 100}%`;
-      star.style.setProperty("--duration", `${1 + Math.random() * 3}s`);
-      star.style.setProperty("--delay", `${Math.random() * 3}s`);
-      star.style.opacity = `${0.2 + Math.random() * 0.5}`;
-      container.appendChild(star);
-      stars.push(star);
-    }
+    const onScroll = () => {
+      const totalH = document.body.scrollHeight - window.innerHeight;
+      if (totalH <= 0) return;
+      const progress = window.scrollY / totalH;
+      scrollRef.current = progress;
+
+      let accumulated = 0;
+      let idx = 0;
+      for (let i = 0; i < SCENE_HEIGHTS.length; i++) {
+        accumulated += SCENE_HEIGHTS[i] / TOTAL_VH;
+        if (progress < accumulated) {
+          idx = i;
+          break;
+        }
+        idx = i;
+      }
+
+      if (idx !== prevActiveRef.current) {
+        prevActiveRef.current = idx;
+        setActiveScene(idx);
+        setTransitionTrigger((t) => t + 1);
+      }
+    };
+
+    const onMouse = (e: MouseEvent) => {
+      mouseRef.current.x = (e.clientX / window.innerWidth) * 2 - 1;
+      mouseRef.current.y = (e.clientY / window.innerHeight) * 2 - 1;
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("mousemove", onMouse, { passive: true });
+    onScroll();
     return () => {
-      stars.forEach((s) => s.remove());
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("mousemove", onMouse);
     };
   }, []);
 
+  const scenes = [
+    <Scene01Challenge key="s0" />,
+    <Scene02Conflict key="s1" />,
+    <SceneInsideMASAC key="s2" />,
+    <Scene04Learning key="s3" />,
+    <Scene05Validation key="s4" />,
+    <VideoScene key="s5" />,
+    <Scene06Future key="s6" />,
+  ];
+
   return (
-    <main className="relative">
-      {/* 全局星空背景 */}
-      <div ref={starRef} className="fixed inset-0 pointer-events-none z-0" />
+    <main className="relative" style={{ height: `${TOTAL_VH}vh` }}>
+      <Shared3DWorld scrollRef={scrollRef} mouseRef={mouseRef} transitionTrigger={transitionTrigger} />
+      <AmbientOverlay transitionTrigger={transitionTrigger} />
+      <NarrativeNav active={activeScene} />
 
-      <Navbar />
-
-      {/* Section 1: Hero */}
-      <section id="home">
-        <HeroSection />
-      </section>
-
-      {/* Section 2: Problem Statement */}
-      <section id="problem">
-        <ProblemStatement />
-      </section>
-
-      {/* Section 3: System Overview */}
-      <section id="overview">
-        <SystemOverview />
-      </section>
-
-      {/* Section 4: How MASAC Works */}
-      <section id="how">
-        <HowMASACWorks />
-      </section>
-
-      {/* Section 5: Algorithm Architecture */}
-      <section id="algorithm">
-        <AlgorithmFlow />
-      </section>
-
-      {/* Section 6: Training Dashboard */}
-      <section id="dashboard">
-        <TrainingDashboard />
-      </section>
-
-      {/* Section 7: Multi-UAV Cooperation */}
-      <section id="cooperation">
-        <CooperationScene />
-      </section>
-
-      {/* Section 8: Demo Center */}
-      <section id="demo">
-        <VideoCenter />
-      </section>
-
-      {/* Section 9: Project Results */}
-      <section id="results">
-        <ResultsPanel />
-      </section>
-
-      {/* Section 10: Future Vision */}
-      <section id="vision">
-        <FutureVision />
-      </section>
+      {scenes.map((scene, i) => {
+        const heightVh = SCENE_HEIGHTS[i];
+        return (
+          <div key={i} style={{ height: `${heightVh}vh`, position: "relative" }}>
+            <SceneWrapper isActive={activeScene === i}>
+              {scene}
+            </SceneWrapper>
+          </div>
+        );
+      })}
     </main>
   );
 }

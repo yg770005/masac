@@ -2,20 +2,20 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "MASAC | 多智能体强化学习无人机协同决策系统",
+  title: "无人机集群智能 | 协同决策系统研究",
   description:
-    "Multi-Agent Soft Actor-Critic — 基于深度强化学习的多无人机编队协同控制与决策系统。端到端的MASAC算法实现无人机集群的智能编队飞行、目标追踪与动态避障。",
+    "探索自主无人机集群如何学会协同合作——在动态环境中平衡编队、追踪与安全。",
   keywords: [
-    "MASAC",
-    "多智能体强化学习",
-    "无人机协同决策",
-    "UAV编队控制",
-    "Soft Actor-Critic",
-    "深度强化学习",
+    "无人机集群",
+    "编队控制",
+    "协同AI",
+    "多智能体系统",
+    "强化学习",
+    "自主无人机",
   ],
   openGraph: {
-    title: "MASAC | 多智能体强化学习无人机协同决策系统",
-    description: "基于深度强化学习的多无人机编队协同控制与决策系统",
+    title: "无人机集群智能 | 协同决策系统研究",
+    description: "探索自主无人机集群如何学会协同合作",
     type: "website",
   },
 };
