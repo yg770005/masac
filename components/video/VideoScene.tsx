@@ -1,13 +1,10 @@
 "use client";
 
 import { useRef, useState, useEffect, useCallback } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
 
-export default function VideoScene() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
+export default function VideoScene({ isActive }: { isActive: boolean }) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
   const [playing, setPlaying] = useState(false);
   const [showCover, setShowCover] = useState(true);
   const [showPlaceholder, setShowPlaceholder] = useState(false);
@@ -41,10 +38,10 @@ export default function VideoScene() {
   }, [playing, showPlaceholder]);
 
   return (
-    <div ref={ref} className="w-full h-full flex flex-col items-center justify-center px-4 sm:px-8">
+    <div className="w-full h-full flex flex-col items-center justify-center px-4 sm:px-8">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
-        animate={isInView ? { opacity: 1, y: 0 } : {}}
+        animate={isActive ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.6 }}
         className="text-center mb-8"
       >
@@ -60,9 +57,8 @@ export default function VideoScene() {
       </motion.div>
 
       <motion.div
-        ref={containerRef}
         initial={{ opacity: 0, y: 40 }}
-        animate={isInView ? { opacity: 1, y: 0 } : {}}
+        animate={isActive ? { opacity: 1, y: 0 } : {}}
         transition={{ delay: 0.2, duration: 0.8 }}
         className="relative w-full max-w-5xl rounded-lg overflow-hidden bg-black"
         style={{ aspectRatio: "16/9" }}
@@ -95,7 +91,7 @@ export default function VideoScene() {
 
       <motion.p
         initial={{ opacity: 0 }}
-        animate={isInView ? { opacity: 1 } : {}}
+        animate={isActive ? { opacity: 1 } : {}}
         transition={{ delay: 0.8, duration: 0.6 }}
         className="mt-4 text-slate-600 font-mono"
         style={{ fontSize: "13px" }}

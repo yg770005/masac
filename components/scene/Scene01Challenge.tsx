@@ -24,7 +24,7 @@ const phases = [
   },
 ];
 
-export default function Scene01Challenge() {
+export default function Scene01Challenge(_props: { isActive?: boolean }) {
   const [phase, setPhase] = useState(0);
 
   useEffect(() => {
@@ -69,7 +69,7 @@ export default function Scene01Challenge() {
         ))}
       </AnimatePresence>
 
-      {/* 滚动提示 */}
+      {/* 键盘提示 */}
       {phase >= 2 && (
         <motion.div
           initial={{ opacity: 0 }}
@@ -78,7 +78,7 @@ export default function Scene01Challenge() {
           className="absolute bottom-10 flex flex-col items-center gap-3"
         >
           <span className="text-slate-600 font-mono tracking-[0.3em] uppercase" style={{ fontSize: "12px" }}>
-            向下滚动，感受挑战
+            按下方向键，探索故事
           </span>
           <motion.div
             animate={{ y: [0, 8, 0] }}

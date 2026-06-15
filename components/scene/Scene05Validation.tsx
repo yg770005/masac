@@ -1,7 +1,6 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 const metrics = [
   {
@@ -30,80 +29,72 @@ const metrics = [
   },
 ];
 
-export default function Scene05Validation() {
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"],
-  });
-
-  const ranges: [number, number][] = [
-    [0.02, 0.22],
-    [0.20, 0.42],
-    [0.40, 0.62],
-    [0.60, 0.82],
-  ];
-
-  const metricAnims = metrics.map((_, i) => ({
-    opacity: useTransform(scrollYProgress, [ranges[i][0], ranges[i][0] + 0.05, ranges[i][1], ranges[i][1] + 0.05], [0, 1, 1, 0]),
-    scale: useTransform(scrollYProgress, [ranges[i][0], ranges[i][0] + 0.05, ranges[i][1], ranges[i][1] + 0.05], [0.8, 1, 1, 0.9]),
-    y: useTransform(scrollYProgress, [ranges[i][0], ranges[i][0] + 0.05], [80, 0]),
-  }));
-
-  const summaryOpacity = useTransform(scrollYProgress, [0.84, 0.92], [0, 1]);
-
+// subStep: 0-3 = 四个指标依次累计, 4 = 总结
+export default function Scene05Validation({ subStep }: { subStep: number }) {
   return (
-    <div ref={containerRef} className="w-full h-full overflow-hidden">
-      <div className="sticky top-0 h-screen flex flex-col items-center justify-center relative">
-        {metrics.map((m, i) => (
+    <div className="w-full h-full flex flex-col items-center justify-center relative">
+      <AnimatePresence mode="wait">
+        {/* 指标阶段: subStep 0-3 */}
+        {subStep <= 3 && (
           <motion.div
-            key={m.title}
-            style={{
-              opacity: metricAnims[i].opacity,
-              scale: metricAnims[i].scale,
-              y: metricAnims[i].y,
-            }}
-            className="absolute text-center px-4"
+            key={`metric-${subStep}`}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="absolute inset-0 flex flex-col items-center justify-center"
           >
-            <p
-              className="font-black tracking-tight leading-[0.85]"
-              style={{
-                color: m.color,
-                fontSize: "clamp(80px, 20vw, 280px)",
-              }}
-            >
-              {m.value}
-            </p>
-            <p
-              className="mt-4 text-slate-500 font-mono tracking-[0.2em] uppercase"
-              style={{ fontSize: "clamp(16px, 2vw, 24px)" }}
-            >
-              {m.title}
-            </p>
-            <p
-              className="mt-2 text-slate-600 max-w-sm mx-auto"
-              style={{ fontSize: "clamp(14px, 1.6vw, 18px)" }}
-            >
-              {m.desc}
+            {metrics.slice(0, subStep + 1).map((m, i) => (
+              <motion.div
+                key={m.title}
+                initial={{ opacity: 0, y: 50, scale: 0.9 }}
+                animate={{
+                  opacity: i === subStep ? 1 : 0.35,
+                  y: 0,
+                  scale: i === subStep ? 1 : 0.95,
+                }}
+                transition={{ duration: 0.5, delay: i === subStep ? 0.1 : 0, ease: [0.33, 1, 0.68, 1] }}
+                className="text-center px-4 mb-2"
+              >
+                <p
+                  className="font-black tracking-tight leading-[0.85]"
+                  style={{ color: m.color, fontSize: "clamp(60px, 16vw, 200px)" }}
+                >
+                  {m.value}
+                </p>
+                <p className="text-slate-500 font-mono tracking-[0.2em] uppercase" style={{ fontSize: "clamp(14px, 2vw, 20px)" }}>
+                  {m.title}
+                </p>
+                <p className="text-slate-600 max-w-sm mx-auto" style={{ fontSize: "clamp(12px, 1.6vw, 16px)" }}>
+                  {m.desc}
+                </p>
+              </motion.div>
+            ))}
+            <p className="text-slate-600 font-mono text-xs mt-4">
+              指标 {subStep + 1}/{metrics.length}
             </p>
           </motion.div>
-        ))}
+        )}
 
-        <motion.div
-          style={{ opacity: summaryOpacity }}
-          className="absolute text-center px-4"
-        >
-          <p
-            className="text-slate-300 font-light leading-relaxed max-w-xl"
-            style={{ fontSize: "clamp(22px, 3vw, 36px)" }}
+        {/* 总结: subStep 4 */}
+        {subStep === 4 && (
+          <motion.div
+            key="summary"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4, ease: [0.33, 1, 0.68, 1] }}
+            className="absolute inset-0 flex flex-col items-center justify-center text-center px-4"
           >
-            一个集群同时完成追踪、编队、避碰与节能。
-            没有人类程序员预设规则。
-            数学自己找到了答案。
-          </p>
-        </motion.div>
-      </div>
+            <p
+              className="text-slate-300 font-light leading-relaxed max-w-xl"
+              style={{ fontSize: "clamp(22px, 3vw, 36px)" }}
+            >
+              一个集群同时完成追踪、编队、避碰与节能。没有人类程序员预设规则。数学自己找到了答案。
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

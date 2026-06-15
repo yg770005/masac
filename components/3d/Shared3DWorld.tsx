@@ -35,7 +35,7 @@ function TransitionBurst({ trigger }: { trigger: number }) {
   const prevTrigger = useRef(trigger);
 
   const particles = useMemo(() => {
-    const count = 300;
+    const count = 50;
     const pos = new Float32Array(count * 3);
     const vel = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
@@ -92,20 +92,20 @@ function GroundGrid() {
     <group ref={gridRef} position={[0, -2.5, 0]}>
       {/* 主网格盘 */}
       <mesh rotation={[-Math.PI / 2, 0, 0]}>
-        <ringGeometry args={[3, 10, 120]} />
+        <ringGeometry args={[3, 10, 48]} />
         <meshBasicMaterial color="#22d3ee" transparent opacity={0.04} side={THREE.DoubleSide} depthWrite={false} />
       </mesh>
       {/* 细网格线 */}
       <mesh rotation={[-Math.PI / 2, 0, 0]}>
-        <ringGeometry args={[3.5, 3.52, 80]} />
+        <ringGeometry args={[3.5, 3.52, 32]} />
         <meshBasicMaterial color="#22d3ee" transparent opacity={0.1} side={THREE.DoubleSide} depthWrite={false} />
       </mesh>
       <mesh rotation={[-Math.PI / 2, 0, 0]}>
-        <ringGeometry args={[6.5, 6.52, 80]} />
+        <ringGeometry args={[6.5, 6.52, 32]} />
         <meshBasicMaterial color="#3b82f6" transparent opacity={0.08} side={THREE.DoubleSide} depthWrite={false} />
       </mesh>
       <mesh rotation={[-Math.PI / 2, 0, 0]}>
-        <ringGeometry args={[9, 9.52, 80]} />
+        <ringGeometry args={[9, 9.52, 32]} />
         <meshBasicMaterial color="#6366f1" transparent opacity={0.06} side={THREE.DoubleSide} depthWrite={false} />
       </mesh>
     </group>
@@ -115,8 +115,8 @@ function GroundGrid() {
 // 光隧道
 function LightTunnel() {
   const rings = useMemo(() => {
-    return Array.from({ length: 30 }, (_, i) => ({
-      z: -i * 2.5,
+    return Array.from({ length: 10 }, (_, i) => ({
+      z: -i * 3.5,
       radius: 4 + Math.sin(i * 0.4) * 2,
       opacity: 0.06 + (1 - i / 30) * 0.2,
     }));
@@ -126,7 +126,7 @@ function LightTunnel() {
     <group>
       {rings.map((ring, i) => (
         <mesh key={i} position={[0, 0, ring.z]}>
-          <torusGeometry args={[ring.radius, 0.015, 8, 48]} />
+          <torusGeometry args={[ring.radius, 0.015, 6, 32]} />
           <meshBasicMaterial
             color={i % 3 === 0 ? "#22d3ee" : i % 3 === 1 ? "#3b82f6" : "#8b5cf6"}
             transparent
@@ -151,14 +151,14 @@ export default function Shared3DWorld({
   return (
     <div className="fixed inset-0 z-0">
       <Canvas
-        camera={{ position: [0, 1.5, 6], fov: 65, near: 0.1, far: 60 }}
+        camera={{ position: [0, 1.5, 6], fov: 65, near: 0.1, far: 35 }}
         gl={{
           antialias: true,
           alpha: true,
           toneMapping: THREE.ACESFilmicToneMapping,
           toneMappingExposure: 1.2,
         }}
-        dpr={[0.8, 1.2]}
+        dpr={[0.6, 1.0]}
       >
         <Suspense fallback={null}>
           <ambientLight intensity={0.2} />

@@ -14,7 +14,7 @@ const DRONE_CONFIGS = [
   { color: "#818cf8", emissive: "#4f46e5", orbit: 3.8, phase: 4.8, yBase: 0.2, scale: 2.6 },
 ];
 
-const TRAIL_LENGTH = 150;
+const TRAIL_LENGTH = 35;
 
 export default function DroneTrailSystem({ cameraZ }: { cameraZ: MutableRefObject<number> }) {
   const groupRef = useRef<THREE.Group>(null);

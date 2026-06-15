@@ -14,7 +14,7 @@ export default function DeepParticleUniverse({ mouseRef }: DeepParticleUniverseP
   const layer3Ref = useRef<THREE.Points>(null);
 
   const L1 = useMemo(() => {
-    const count = 800;
+    const count = 180;
     const pos = new Float32Array(count * 3);
     const sizes = new Float32Array(count);
     for (let i = 0; i < count; i++) {
@@ -27,7 +27,7 @@ export default function DeepParticleUniverse({ mouseRef }: DeepParticleUniverseP
   }, []);
 
   const L2 = useMemo(() => {
-    const count = 500;
+    const count = 100;
     const pos = new Float32Array(count * 3);
     const sizes = new Float32Array(count);
     for (let i = 0; i < count; i++) {
@@ -40,7 +40,7 @@ export default function DeepParticleUniverse({ mouseRef }: DeepParticleUniverseP
   }, []);
 
   const L3 = useMemo(() => {
-    const count = 300;
+    const count = 50;
     const pos = new Float32Array(count * 3);
     const sizes = new Float32Array(count);
     for (let i = 0; i < count; i++) {

@@ -38,13 +38,13 @@ function DroneBody({
 
         {/* 上盖 */}
         <mesh position={[0, 0.06, 0]}>
-          <cylinderGeometry args={[0.08, 0.12, 0.04, 16]} />
+          <cylinderGeometry args={[0.08, 0.12, 0.04, 8]} />
           <meshStandardMaterial color="#1a1a2e" metalness={0.9} roughness={0.1} />
         </mesh>
 
         {/* 传感器模块 */}
         <mesh position={[0, -0.04, 0.08]}>
-          <sphereGeometry args={[0.04, 8, 8]} />
+          <sphereGeometry args={[0.04, 4, 4]} />
           <meshStandardMaterial color="#ff3333" emissive="#ff0000" emissiveIntensity={0.8} />
         </mesh>
 
@@ -56,7 +56,7 @@ function DroneBody({
 
         {/* 前臂螺旋桨护圈 */}
         <mesh position={[0.28, 0.04, 0]}>
-          <torusGeometry args={[0.07, 0.01, 8, 16]} />
+          <torusGeometry args={[0.07, 0.01, 4, 8]} />
           <meshStandardMaterial color="#555" metalness={0.6} roughness={0.4} />
         </mesh>
 
@@ -77,7 +77,7 @@ function DroneBody({
 
         {/* 后臂螺旋桨护圈 */}
         <mesh position={[-0.28, 0.04, 0]}>
-          <torusGeometry args={[0.07, 0.01, 8, 16]} />
+          <torusGeometry args={[0.07, 0.01, 4, 8]} />
           <meshStandardMaterial color="#555" metalness={0.6} roughness={0.4} />
         </mesh>
 
@@ -122,19 +122,19 @@ function DroneBody({
 
         {/* 起落架 */}
         <mesh position={[0.08, -0.06, 0.06]}>
-          <cylinderGeometry args={[0.01, 0.01, 0.06, 6]} />
+          <cylinderGeometry args={[0.01, 0.01, 0.06, 3]} />
           <meshStandardMaterial color="#444" metalness={0.5} roughness={0.5} />
         </mesh>
         <mesh position={[0.08, -0.06, -0.06]}>
-          <cylinderGeometry args={[0.01, 0.01, 0.06, 6]} />
+          <cylinderGeometry args={[0.01, 0.01, 0.06, 3]} />
           <meshStandardMaterial color="#444" metalness={0.5} roughness={0.5} />
         </mesh>
         <mesh position={[-0.08, -0.06, 0.06]}>
-          <cylinderGeometry args={[0.01, 0.01, 0.06, 6]} />
+          <cylinderGeometry args={[0.01, 0.01, 0.06, 3]} />
           <meshStandardMaterial color="#444" metalness={0.5} roughness={0.5} />
         </mesh>
         <mesh position={[-0.08, -0.06, -0.06]}>
-          <cylinderGeometry args={[0.01, 0.01, 0.06, 6]} />
+          <cylinderGeometry args={[0.01, 0.01, 0.06, 3]} />
           <meshStandardMaterial color="#444" metalness={0.5} roughness={0.5} />
         </mesh>
       </group>

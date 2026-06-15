@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useMemo } from "react";
+import { useRef, useMemo, memo } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 
@@ -12,7 +12,7 @@ function createPlanetTexture(
   secondaryColor: string,
   pattern: "earth" | "mars" | "jupiter" | "venus" | "neptune"
 ): HTMLCanvasElement {
-  const size = 512;
+  const size = 256;
   const canvas = document.createElement("canvas");
   canvas.width = size;
   canvas.height = size;
@@ -93,19 +93,19 @@ function createPlanetTexture(
 }
 
 const planetDefs = [
-  // 左侧天体
-  { position: [-12, 3.5, -8] as [number, number, number], radius: 1.6, baseColor: "#1a3a5c", secondaryColor: "#2d5a27", pattern: "earth" as const, glowColor: "#22d3ee", rotationSpeed: 0.08 },
-  { position: [-9, -2.5, -5] as [number, number, number], radius: 1.0, baseColor: "#c1440e", secondaryColor: "#e87830", pattern: "mars" as const, glowColor: "#ef4444", rotationSpeed: 0.05 },
+  // 左侧天体 — 大幅内移, 放大, 拉近
+  { position: [-5, 3.0, -2] as [number, number, number], radius: 2.5, baseColor: "#1a3a5c", secondaryColor: "#2d5a27", pattern: "earth" as const, glowColor: "#22d3ee", rotationSpeed: 0.08 },
+  { position: [-3.5, -2.5, -1] as [number, number, number], radius: 1.8, baseColor: "#c1440e", secondaryColor: "#e87830", pattern: "mars" as const, glowColor: "#ef4444", rotationSpeed: 0.05 },
   // 右侧天体
-  { position: [11, 2.0, -7] as [number, number, number], radius: 2.0, baseColor: "#d4a574", secondaryColor: "#c49460", pattern: "jupiter" as const, glowColor: "#f59e0b", rotationSpeed: 0.12 },
-  { position: [8, -3.0, -4] as [number, number, number], radius: 1.2, baseColor: "#2244aa", secondaryColor: "#1a3366", pattern: "neptune" as const, glowColor: "#3b82f6", rotationSpeed: 0.04 },
-  { position: [14, 4.5, -10] as [number, number, number], radius: 0.8, baseColor: "#e8b860", secondaryColor: "#8a6020", pattern: "venus" as const, glowColor: "#fbbf24", rotationSpeed: 0.03 },
+  { position: [5, 1.5, -2] as [number, number, number], radius: 3.0, baseColor: "#d4a574", secondaryColor: "#c49460", pattern: "jupiter" as const, glowColor: "#f59e0b", rotationSpeed: 0.12 },
+  { position: [4, -3.0, -1] as [number, number, number], radius: 2.0, baseColor: "#2244aa", secondaryColor: "#1a3366", pattern: "neptune" as const, glowColor: "#3b82f6", rotationSpeed: 0.04 },
+  { position: [6, 4.0, -3] as [number, number, number], radius: 1.5, baseColor: "#e8b860", secondaryColor: "#8a6020", pattern: "venus" as const, glowColor: "#fbbf24", rotationSpeed: 0.03 },
 ];
 
 // ============================================================
 // 单个行星
 // ============================================================
-function Planet({
+const Planet = memo(function Planet({
   position,
   radius,
   baseColor,
@@ -137,7 +137,7 @@ function Planet({
     <group position={position}>
       {/* 行星本体 */}
       <mesh ref={meshRef}>
-        <sphereGeometry args={[radius, 64, 64]} />
+        <sphereGeometry args={[radius, 24, 24]} />
         <meshStandardMaterial
           map={texture}
           roughness={0.7}
@@ -147,7 +147,7 @@ function Planet({
 
       {/* 大气光晕 */}
       <mesh>
-        <sphereGeometry args={[radius * 1.12, 32, 32]} />
+        <sphereGeometry args={[radius * 1.12, 12, 12]} />
         <meshBasicMaterial
           color={glowColor}
           transparent
@@ -159,7 +159,7 @@ function Planet({
 
       {/* 外层光晕 */}
       <mesh>
-        <sphereGeometry args={[radius * 1.3, 32, 32]} />
+        <sphereGeometry args={[radius * 1.3, 12, 12]} />
         <meshBasicMaterial
           color={glowColor}
           transparent
@@ -172,7 +172,7 @@ function Planet({
       {/* 轨道环 — 不是所有行星都有 */}
       {(pattern === "jupiter" || pattern === "neptune") && (
         <mesh ref={ringRef} rotation={[Math.PI * 0.4, 0.2, 0]}>
-          <torusGeometry args={[radius * 1.6, radius * 0.04, 16, 80]} />
+          <torusGeometry args={[radius * 1.6, radius * 0.04, 6, 32]} />
           <meshBasicMaterial
             color={glowColor}
             transparent
@@ -184,7 +184,7 @@ function Planet({
       )}
     </group>
   );
-}
+});
 
 // ============================================================
 // 背景星空 — 固定位置大星点
@@ -193,7 +193,7 @@ function BrightStars() {
   const stars = useMemo(() => {
     const arr: { pos: [number, number, number]; color: string; size: number }[] = [];
     const colors = ["#22d3ee", "#3b82f6", "#8b5cf6", "#ec4899", "#f59e0b", "#ffffff", "#38bdf8", "#818cf8"];
-    for (let i = 0; i < 40; i++) {
+    for (let i = 0; i < 18; i++) {
       arr.push({
         pos: [
           (Math.random() - 0.5) * 30,
@@ -211,7 +211,7 @@ function BrightStars() {
     <group>
       {stars.map((s, i) => (
         <mesh key={i} position={s.pos}>
-          <sphereGeometry args={[s.size, 4, 4]} />
+          <sphereGeometry args={[s.size, 3, 3]} />
           <meshBasicMaterial color={s.color} transparent opacity={0.6} blending={THREE.AdditiveBlending} depthWrite={false} />
         </mesh>
       ))}

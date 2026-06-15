@@ -1,7 +1,6 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
 
 const visions = [
   {
@@ -22,15 +21,12 @@ const visions = [
   },
 ];
 
-export default function Scene06Future() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
-
+export default function Scene06Future({ isActive }: { isActive: boolean }) {
   return (
-    <div ref={ref} className="w-full h-full flex flex-col items-center justify-center px-4">
+    <div className="w-full h-full flex flex-col items-center justify-center px-4">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
-        animate={isInView ? { opacity: 1, y: 0 } : {}}
+        animate={isActive ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.6 }}
         className="text-center mb-12"
       >
@@ -50,7 +46,7 @@ export default function Scene06Future() {
           <motion.div
             key={v.title}
             initial={{ opacity: 0, y: 40 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            animate={isActive ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.2 + i * 0.15, duration: 0.7 }}
             className="text-center"
           >
@@ -72,7 +68,7 @@ export default function Scene06Future() {
 
       <motion.div
         initial={{ opacity: 0 }}
-        animate={isInView ? { opacity: 1 } : {}}
+        animate={isActive ? { opacity: 1 } : {}}
         transition={{ delay: 1.2, duration: 1 }}
         className="mt-12 text-center"
       >

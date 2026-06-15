@@ -1,20 +1,20 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
-import { motion, useInView, animate } from "framer-motion";
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import AnimatedMetric from "../ui/AnimatedMetric";
 
-export default function Scene04Learning() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
+export default function Scene04Learning({ isActive }: { isActive: boolean }) {
   const [showBars, setShowBars] = useState(false);
 
   useEffect(() => {
-    if (isInView) {
+    if (isActive) {
       const t = setTimeout(() => setShowBars(true), 1500);
       return () => clearTimeout(t);
+    } else {
+      setShowBars(false);
     }
-  }, [isInView]);
+  }, [isActive]);
 
   const bars = [
     { label: "追踪", color: "#ef4444", width: 82 },
@@ -25,12 +25,11 @@ export default function Scene04Learning() {
 
   return (
     <div
-      ref={ref}
       className="w-full h-full flex flex-col items-center justify-center px-4"
     >
       <motion.div
         initial={{ opacity: 0, y: 30 }}
-        animate={isInView ? { opacity: 1, y: 0 } : {}}
+        animate={isActive ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.6 }}
         className="text-center mb-12"
       >
@@ -99,7 +98,7 @@ export default function Scene04Learning() {
 
       <motion.p
         initial={{ opacity: 0 }}
-        animate={isInView ? { opacity: 1 } : {}}
+        animate={isActive ? { opacity: 1 } : {}}
         transition={{ delay: 1.5, duration: 0.8 }}
         className="mt-12 text-slate-500 text-center max-w-lg"
         style={{ fontSize: "clamp(16px, 2vw, 24px)" }}
