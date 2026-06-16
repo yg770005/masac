@@ -131,3 +131,48 @@
     @apply bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-500;
   }
 }
+
+/* KaTeX 深色模式适配 */
+.katex {
+  font-size: 1.1em !important;
+}
+
+.katex .mathnormal,
+.katex .mord {
+  color: #e2e8f0;
+}
+
+.katex .mbin,
+.katex .mrel {
+  color: #22d3ee;
+}
+
+.katex .mop {
+  color: #94a3b8;
+}
+
+.katex .minner {
+  color: #e2e8f0;
+}
+
+.katex .mopen,
+.katex .mclose {
+  color: #cbd5e1;
+}
+
+.katex .msupsub .vlist-t,
+.katex .msub .vlist-t {
+  font-size: 0.8em;
+}
+
+.katex .mord.text {
+  color: #cbd5e1;
+}
+
+.katex .accent .accent-body {
+  color: #e2e8f0;
+}
+
+.katex-formula {
+  display: inline-block;
+}

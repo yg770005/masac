@@ -8,6 +8,7 @@ const Scene01Challenge = dynamic(() => import("../components/scene/Scene01Challe
 const Scene02Conflict = dynamic(() => import("../components/scene/Scene02Conflict"), { ssr: false });
 const SceneInsideMASAC = dynamic(() => import("../components/scene/SceneInsideMASAC"), { ssr: false });
 const Scene04Learning = dynamic(() => import("../components/scene/Scene04Learning"), { ssr: false });
+const Scene07Reward = dynamic(() => import("../components/scene/Scene07Reward"), { ssr: false });
 const Scene05Validation = dynamic(() => import("../components/scene/Scene05Validation"), { ssr: false });
 const VideoScene = dynamic(() => import("../components/video/VideoScene"), { ssr: false });
 const Scene06Future = dynamic(() => import("../components/scene/Scene06Future"), { ssr: false });
@@ -16,9 +17,9 @@ const AmbientOverlay = dynamic(() => import("../components/ui/AmbientOverlay"), 
 const CursorFollower = dynamic(() => import("../components/ui/CursorFollower"), { ssr: false });
 
 // 每个场景的子步骤数
-const SUB_COUNTS = [1, 6, 9, 1, 5, 1, 1];
+const SUB_COUNTS = [1, 6, 9, 5, 1, 5, 1, 1];
 const TOTAL_STEPS = SUB_COUNTS.reduce((a, b) => a + b, 0);
-const SCENE_LABELS = ["挑战", "冲突", "深入", "学习", "验证", "演示", "未来"];
+const SCENE_LABELS = ["挑战", "冲突", "深入", "奖励", "学习", "验证", "演示", "未来"];
 
 function getSceneInfo(step: number) {
   let remaining = step;
@@ -250,7 +251,7 @@ export default function Page() {
               className="absolute inset-0 z-10 pointer-events-none"
             >
               <div className="pointer-events-auto w-full h-full">
-                <Scene04Learning isActive={sceneIndex === 3} />
+                <Scene07Reward subStep={subStep} />
               </div>
             </motion.div>
           )}
@@ -264,7 +265,7 @@ export default function Page() {
               className="absolute inset-0 z-10 pointer-events-none"
             >
               <div className="pointer-events-auto w-full h-full">
-                <Scene05Validation subStep={subStep} />
+                <Scene04Learning isActive={sceneIndex === 4} />
               </div>
             </motion.div>
           )}
@@ -278,7 +279,7 @@ export default function Page() {
               className="absolute inset-0 z-10 pointer-events-none"
             >
               <div className="pointer-events-auto w-full h-full">
-                <VideoScene isActive={sceneIndex === 5} />
+                <Scene05Validation subStep={subStep} />
               </div>
             </motion.div>
           )}
@@ -292,7 +293,21 @@ export default function Page() {
               className="absolute inset-0 z-10 pointer-events-none"
             >
               <div className="pointer-events-auto w-full h-full">
-                <Scene06Future isActive={sceneIndex === 6} />
+                <VideoScene isActive={sceneIndex === 6} />
+              </div>
+            </motion.div>
+          )}
+          {sceneIndex === 7 && (
+            <motion.div
+              key="s7"
+              initial={{ opacity: 0, scale: 0.92 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.88 }}
+              transition={{ duration: 0.35, ease: [0.33, 1, 0.68, 1] }}
+              className="absolute inset-0 z-10 pointer-events-none"
+            >
+              <div className="pointer-events-auto w-full h-full">
+                <Scene06Future isActive={sceneIndex === 7} />
               </div>
             </motion.div>
           )}

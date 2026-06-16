@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "katex/dist/katex.min.css";
 
 export const metadata: Metadata = {
   title: "无人机集群智能 | 协同决策系统研究",
